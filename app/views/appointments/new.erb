@@ -1,0 +1,45 @@
+<% if logged_in? %>
+
+    <% if flash.has_key?(:message) %>
+        <div class="alert alert-success" role="alert">
+            <%=flash[:message]%>
+        </div>
+    <% end %>
+    <a href="/patients/<%=@patient.slug%>/edit" class="btn btn-primary" role="button" aria-pressed="true">Edit Patient Info</a>
+
+    <h3> CREATE NEW APPOINTMENT </h3>
+    <% if session[:user_id] != @patient.user.id %>
+                <div> 
+                    <p> Patient Name: <%= @patient.name %> </p>
+                    <p> Patient Address: <%= @patient.address %> </p>
+                </div>
+    <% end %>
+
+    <form action="/appointments/<%=@patient.slug%>" method="POST">
+            <input type="hidden" id="hidden" name="patient[id]" value="<%= @patient.id %>">
+            <div class="form-group">
+                <label for="appointment_date"> Date: </label>
+                <input type="date" id="appointment_date" class="form-control" name="appointment[date]">
+            </div>
+            <div>
+                <label> Choose a Practitioner </label>
+            </div>
+            <% @staffs.each do |staff| %>
+                <% if staff.is_doctor %>
+                    <input type="hidden" id="hidden" name="staff[medical_id]" value="<%= staff.medical_id %>">
+                    <input type="radio" id="<%= staff.id %>" value="<%= staff.id %>" name="staff[id]">
+                    <label for ="<%= staff.id %>" ><%= staff.name %></label>
+                    <br>
+                <% end %>
+            <% end %>
+            <button type="submit" class="btn btn-primary">Submit</button>
+
+    </form>
+    
+<% end %>
+
+
+
+
+
+

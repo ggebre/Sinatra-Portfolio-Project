@@ -1,0 +1,51 @@
+
+
+<h2> Name : <%=@doctor.name%> </h2>
+<h2> Speciality :  <%=@doctor.speciality%></h2>
+<h2> Phone :   <%=@doctor.phone%></h2>
+<h2> Address :  <%=@doctor.address%></h2>
+
+
+<% if logged_in? && @doctor.patients.find{|patient| patient.user.id==session[:user_id]}%>
+    
+    <form action='/comments' method='post'>
+        <input type="hidden" name="staff[id]" value="<%=@doctor.id%>">
+        <textarea name="comment[content]" rows=3 cols=30 placeholder="ADD NEW COMMENT"></textarea>
+        <br>
+        <button>Submit</button>
+    </form>
+<% end %>   
+
+<% if flash.has_key?(:message) %>
+    <div class="alert alert-success" role="alert">
+        <%=flash[:message]%>
+    </div>
+<% end %>
+    
+<p> Comments <p>
+<% @doctor.comments.each do |comment| %>
+    <% if @doctor.patients.find{|patient| patient.user.id == session[:user_id]} == Patient.find(comment.patient_id) %>
+        <form action="/comment/<%=comment.id%>" method="post">
+            <input type="hidden" name="_method" value="patch">
+            <textarea name="comment[content]" rows="3" cols="20" placeholder="<%=comment.content%>"></textarea>
+            <br>
+            <input type="submit" value="Edit">
+        </form>
+
+
+        <form action="/comment/<%=comment.id%>" method="post">
+            <input type="hidden" name="_method" value="delete">
+            <br>
+            <input type="submit" value="Delete">
+
+        </form>
+    <% else %>
+
+        <textarea rows=3 cols=30 placeholder="<%= comment.content %>"></textarea>
+        <br>
+    
+
+    <% end %>
+    
+<% end %>
+

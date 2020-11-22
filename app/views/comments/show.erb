@@ -1,0 +1,14 @@
+<% if logged_in? && @staff.user.id == session[:user_id]%>
+    <br>
+        <a href="/staffs" class="btn btn-primary" role="button" aria-pressed="true">GO Back!</a>
+    <br><br>
+    
+    <% if !@staff.comments.empty? %>
+        <% @staff.comments.order(:created_at).each do |comment| %>
+            <textarea rows="3" cols="20" placeholder="<%=comment.content%>"></textarea>
+            <p>Posted: <%=comment.created_at%></p>
+            <br>
+        <% end %>
+    <% end %>
+
+<% end %> 

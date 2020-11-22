@@ -1,0 +1,19 @@
+<% if logged_in? %>
+<button> <a href='/patients/<%=@patient.slug%>'>Back</a></button>
+<br><br>
+<% @appointments.each do |appointment| %>
+    
+    <p> Doctor's Name: <%= appointment.staff.name %>               Date: <%= appointment.appointment_date %></p>
+    <% if !appointment.prescriptions.empty? %>
+        <% appointment.prescriptions.each do |prescription| %>
+            <p> Prescription Name : <%= prescription.name %> </p>
+            <ul>
+                <li> Prescription Description : <%= prescription.description %> </li>
+            </ul>
+        <% end %>
+    <% end %>
+<% end %>
+
+<% end %>
+
+

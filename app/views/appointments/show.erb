@@ -1,0 +1,10 @@
+
+<% if logged_in? %>
+<h1> Appointment </h1>
+
+<p> Patient Name: <%= @appointment.patient.name %> </p>
+<p> Doctor Name: <%= @appointment.staff.name %> </p>
+
+<p> Appointment Time: <%= @appointment.appointment_date %> </p>
+
+<% end %>

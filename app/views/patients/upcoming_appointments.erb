@@ -1,0 +1,19 @@
+<% if logged_in? %>
+
+    <h1> <%= @patient.name%>'s Appointments </h1>
+    <button><a href="/appointments/<%= @patient.slug %>/new" > CREATE APPOINTMENT </a></button>
+    
+    <% if !@staff %>
+        <% @patient.appointments.each do |appointment| %>
+                <% if !appointment.is_upcoming? %>
+                    <textarea rows="6" cols="30" > <%= appointment.diagnosis_note %> </textarea>
+                    <br>
+                <% end %>
+                <p> Appointment Date: <%= appointment.appointment_date %> </p>
+                <p> Doctor's Name: <%= appointment.staff.name %> </p>
+            
+        <% end %>
+        
+    <% end %>
+
+<% end %>
