@@ -2,7 +2,7 @@
 <% if logged_in? %>
     <h1> New Patient Registration</h1>
     
-    <form action="/patients" method="POST">
+    <form action="/staffs/patients" method="POST">
         <div class="form-group">
             <label for="name"> Name: </label>
             <input type="text" class="form-control" name="patient[name]" id="name" placeholder="Enter patient full name">

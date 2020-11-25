@@ -4,11 +4,11 @@
     <% end %>
 
     <h1> <%= @patient.name%>'s Appointments </h1>
-    <button><a href="/appointments/<%= @patient.slug %>/new" > CREATE APPOINTMENT </a></button>
+    <button><a href="/appointments/<%=@patient.id%>/new" > CREATE APPOINTMENT </a></button>
     
     <% if !@staff %>
-    <button> <a href="/appointments/old_appointments"> Old Appointments </a> </button>
-    <button> <a href="/appointments/upcoming_appointments"> Upcoming Appointments </a> </button>
+    <button> <a href="/patients/<%=@patient.id%>/old_appointments"> Old Appointments </a> </button>
+    <button> <a href="/patients/<%=@patient.id%>/upcoming_appointments"> Upcoming Appointments </a> </button>
         
     <% end %>
 

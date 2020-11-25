@@ -7,7 +7,7 @@
     <% end %>
     
     <% if current_user.staff_id %>
-        <a href="/patients/<%=@patient.slug%>/edit" class="btn btn-primary" role="button" aria-pressed="true">Edit Patient Info</a>
+        <a href="/staffs/patients/<%=@patient.id%>/edit" class="btn btn-primary" role="button" aria-pressed="true">Edit Patient Info</a>
     <% end %>
     <h3> CREATE NEW APPOINTMENT </h3>
 
@@ -19,7 +19,7 @@
                 </div>
     <% end %>
 
-    <form action="/appointments/<%=@patient.slug%>" method="POST">
+    <form action="/appointments/<%=@patient.id%>" method="POST">
             <input type="hidden" id="hidden" name="patient[id]" value= <%= @patient.id %>>
             <div class="form-group">
                 <label for="appointment_date"> Date: </label>

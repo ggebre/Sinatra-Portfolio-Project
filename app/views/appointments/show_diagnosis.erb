@@ -1,11 +1,11 @@
-<% if logged_in? %>
+
 <h1> Patient Detail </h1>
     <p> Name : <%= @patient.name %> </p>
     <p> Email : <%= @patient.email %> </p>
     <p> Phone: <%= @patient.phone %> </p>
     <p> Address : <%= @patient.address %> </p>
 
-<form action="/patients/diagnosis/<%=@patient.slug%>" method="POST">
+<form action="/patients/<%=@patient.id%>/diagnosis" method="POST">
         
         <label for="diagnosis"> Diagnosis </label> <br>
         <textarea id = "diagnosis" name="appointment[diagnosis]" rows="4" cols="50">  </textarea>
@@ -22,4 +22,4 @@
         <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
-<% end %>
+

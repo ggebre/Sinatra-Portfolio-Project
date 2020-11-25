@@ -3,7 +3,7 @@
     <h1> Edit Patient Data</h1>
     <h3> Name : <%=@patient.name%> </h3>
     <h3> DOB : <%=@patient.dob%> </h3>
-    <form action="/patients/<%=@patient.slug%>" method="POST">
+    <form action="/staffs/patients/<%=@patient.id%>" method="POST">
         <input type="hidden" name="_method" value="patch">
         <div class="form-group">
             <label for="email"> Email: </label>

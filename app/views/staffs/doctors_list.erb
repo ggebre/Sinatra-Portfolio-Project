@@ -1,7 +1,7 @@
 <h3> List of Practitioners </h3>
 <div class="list-group">
     <% @doctors.each do |doctor| %>
-        <a href='/staffs/doctors/<%=doctor.slug%>' class="list-group-item list-group-item-action"><%=doctor.name%></a>
+        <a href='/staffs/doctors/<%=doctor.id%>' class="list-group-item list-group-item-action"><%=doctor.name%></a>
     <% end %>
 </div>
 

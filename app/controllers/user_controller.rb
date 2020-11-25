@@ -37,26 +37,6 @@ class UserController < ApplicationController
 
         end
         
-
-        # if patient || staff 
-        #     user = User.create(params[:user])
-
-        #     patient.user = user if patient 
-        #     staff.user = user if staff 
-            
-        #     session[:user_id] = user.id
-            
-        #     if patient 
-        #         redirect "/patients/#{patient.slug}"
-        #     else
-                
-        #         redirect "/staffs"
-        #     end
-        # else 
-        #     # YOU ARE NOT IN OUR SYSTEM 
-        #     flash[:message] = "YOUR ARE NOT IN OUR SYSTEM"
-        #     redirect '/signup'
-        # end
     end
 
     get '/login' do 

@@ -6,7 +6,7 @@
 
 
 
-<% if logged_in? && @doctor.patients.find{|patient| patient.user==current_user}%>
+
     
     <form action='/comments' method='post'>
         <input type="hidden" name="staff[id]" value="<%=@doctor.id%>">
@@ -14,14 +14,18 @@
         <br>
         <button>Submit</button>
     </form>
-<% end %>   
+   
+
+
 
 <% if flash.has_key?(:message) %>
     <div class="alert alert-success" role="alert">
         <%=flash[:message]%>
     </div>
 <% end %>
-    
+  
+
+
 <p> Comments <p>
 
 <% @doctor.comments.each do |comment| %>
