@@ -6,7 +6,7 @@ class StaffsController < ApplicationController
     get '/staffs/:id/comments' do 
         # @staff = Staff.find_by_slug(params[:slug])
         @staff = Staff.find(params[:id])
-        @comments = Comment.comments_to_a_staff_with(@staff.id)
+        @comments = @staff.comments 
         erb :'/comments/show'
     end
 
@@ -22,7 +22,7 @@ class StaffsController < ApplicationController
     end
 
 
-    
+
     # NEW PATIENT REGISTRATION AND EDIT BY STAFF 
 
     get '/staffs/patients/:id/edit' do 
@@ -32,21 +32,10 @@ class StaffsController < ApplicationController
 
     patch '/staffs/patients/:id' do 
         patient = Patient.find(params[:id])
-        
 
-        email = params[:patient][:email]
-        phone = params[:patient][:phone]
-        address = params[:patient][:address]
-        if !email.empty?
-            patient.update(email: email)
+        if logged_in? && current_user.staff_id
+            patient.update(params[:patient])
         end
-        if !phone.empty?
-            patient.update(phone: phone)
-        end
-        if !address.empty?
-            patient.update(address: address)
-        end
-        
         flash[:message] = "#{patient.name}'s data is updated successfully! "
         redirect "/appointments/#{patient.id}/new"
 
@@ -79,11 +68,19 @@ class StaffsController < ApplicationController
         if patient 
         # once this is set, then set appointment or view appointments 
         # redirect to staff's page 
-            redirect "/patients/#{patient.id}"
+        # if current user is nurse redirect to new appointment
+        # else redirect to show_diagnosis 
+        
+            if is_staff_doctor?
+                # List of appointments for this patient with the practitioner 
+                redirect "/appointments/patient/#{patient.id}"
+            else
+                redirect "/appointments/#{patient.id}/new"
+            end
         else
             # error message PATIENT NOT FOUND
             flash[:message] = "Incorrect Name or DOB entered"
-            redirect '/patients/search'
+            redirect '/staffs/patients/search'
         end
     end
 

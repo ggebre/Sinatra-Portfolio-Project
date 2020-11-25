@@ -24,6 +24,9 @@ class ApplicationController < Sinatra::Base
     def current_user
       User.find(session[:user_id])
     end
+    def is_staff_doctor?
+      session[:user_type]
+    end
 
   end 
 

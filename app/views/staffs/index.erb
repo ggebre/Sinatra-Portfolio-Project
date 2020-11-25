@@ -1,20 +1,21 @@
+<% if logged_in? %>
 
+    <% if flash.has_key?(:message) %>
+        <div class="alert alert-success" role="alert">
+            <%=flash[:message]%>
+        </div>
+    <% end %>
 
-<% if flash.has_key?(:message) %>
-    <div class="alert alert-success" role="alert">
-        <%=flash[:message]%>
-    </div>
-<% end %>
-
-    
-    <br><br>
-    
-    
+        
+        <% if !is_staff_doctor? %>
         <a href="/staffs/patients/new" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">REGISTER NEW PATIENT</a>
-   
+        <% end %>
+
         <a href="/staffs/patients/search" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">SEARCH FOR A PATIENT</a>
-    
-        <a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Comments</a>
-    
+        
+        <% if is_staff_doctor? %>
+            <a href="/comments/<%=current_user.staff_id%>" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Comments</a>
+        <% end %>
+<% end %>   
 
 

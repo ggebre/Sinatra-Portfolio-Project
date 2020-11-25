@@ -1,4 +1,4 @@
-<% if logged_in? %>
+
 <h1> <%= @patient.name %>'s Detail </h1>
 
     <p> Name : <%= @patient.name %> </p>
@@ -23,4 +23,4 @@
     </form>
     <button><a href="/patients/<%=@patient.slug/edit"> Edit Patient </a></button>
 
-<% end %>
+

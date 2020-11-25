@@ -4,29 +4,15 @@ class Staff < ActiveRecord::Base
     has_many :appointments 
     has_many :patients, through: :appointments
 
-    # def self.find_staff(user_id)
-    #     self.select {|staff| staff if staff.user}.find{|staff| staff.user.id == user_id}
+    # def self.find_current_user_staff(current_user)
+    #     self.find {|staff| staff.user == current_user}
     # end
-    # # checks if the staff is doctor or not
-    # def self.doctors_list  
-    #     self.select {|staff| staff.is_doctor}
-    # end
-    # # all patients 
-    # def patients 
-    #     self.appointments.map {|appointment| Patient.find_by(id: appointment.patient_id)}
-    # end
-    # def is_doctor?
-    #     self.is_doctor 
-    # end
+   
     def self.all_practitioners 
         self.select{|staff| staff.is_doctor}
     end
 
-    def slug 
-        self.name.strip.gsub(/[\s\t\r\n\f]/,'-').gsub(/\W/,'-').downcase
+    def is_doctor_of?(current_user)
+        self.patients.find{|patient| patient.user == current_user}
     end
-    
-    def self.find_by_slug(slug)
-        self.find {|staff| staff.slug == slug}
-    end 
 end

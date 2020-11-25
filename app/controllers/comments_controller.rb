@@ -1,5 +1,12 @@
 class CommentsController < ApplicationController 
 
+    get '/comments/:staff_id' do 
+        staff= Staff.find(params[:staff_id])
+        @comments = staff.comments 
+
+        erb :'/comments/show'
+    end
+
     post '/comments' do 
         
         comment = Comment.create(params[:comment])
@@ -20,9 +27,9 @@ class CommentsController < ApplicationController
 
         comment = Comment.find(params[:id])
         
-        # if logged_in? && comment.patient.user.id == session[:user_id]
+        if logged_in? && comment.patient.user.id == session[:user_id]
             comment.update(content: params[:comment][:content])
-        # end
+        end
         
         flash[:message] = "Successfully updated a comment!!"
         redirect "/staffs/doctors/#{comment.staff_id}"
@@ -33,9 +40,9 @@ class CommentsController < ApplicationController
         # staff = Staff.find(comment.staff_id)
        
         staff = comment.staff 
-        # if logged_in? && comment.patient.user.id == session[:user_id]
+        if logged_in? && comment.patient.user.id == session[:user_id]
             comment.destroy
-        # end
+        end
         flash[:message] = "Successfully deleted a comment!!"
         redirect "/staffs/doctors/#{comment.staff_id}"
     end

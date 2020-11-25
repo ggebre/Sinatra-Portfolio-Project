@@ -1,8 +1,9 @@
 
 <% if logged_in? %>
-<ul>
-    <% @appointments.each do |appointment| %>
-       <li> <%= appointment.appointment_date %> </li>
-    <% end %>
-</ul>
+    <ul>
+        <% @appointments.each do |appointment| %>
+        <li> <a href="/patients/<%=appointment.patient_id%>/appointment/<%=appointment.id%>"><%= appointment.appointment_date %></a>  </li>
+        <% end %>
+    </ul>
 <% end %>
+

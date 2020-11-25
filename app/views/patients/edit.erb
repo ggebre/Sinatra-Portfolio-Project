@@ -1,22 +1,22 @@
-<% if logged_in?%>
+
+    <% if logged_in? %>
     
-    <h1> Edit Patient Data</h1>
-    <h3> Name : <%=@patient.name%> </h3>
-    <h3> DOB : <%=@patient.dob%> </h3>
-    <form action="/staffs/patients/<%=@patient.id%>" method="POST">
-        <input type="hidden" name="_method" value="patch">
-        <div class="form-group">
-            <label for="email"> Email: </label>
-            <input type="email" class="form-control" name="patient[email]" id="email" placeholder="<%=@patient.email%>">
-        </div>
-        <div class="form-group">
-            <label for="phone"> Phone: </label>
-            <input type="text" class="form-control" name="patient[phone]" id="phone" placeholder="<%=@patient.phone%>">
-        </div>
-        <div class="form-group">
-            <label for="address"> address: </label>
-            <input type="text" class="form-control" name="patient[address]" id="address" placeholder="<%=@patient.address%>">
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-<% end %>
+        <h3> Name : <%=@patient.name%> </h3>
+        <h4> DOB : <%=@patient.dob%> </h3>
+        <form action="/staffs/patients/<%=@patient.id%>" method="POST">
+            <input type="hidden" name="_method" value="patch">
+            <div class="form-group">
+                <label for="email"> Email: </label>
+                <input type="email" class="form-control" name="patient[email]" id="email" placeholder="<%=@patient.email%>" required>
+            </div>
+            <div class="form-group">
+                <label for="phone"> Phone: </label>
+                <input type="text" class="form-control" name="patient[phone]" id="phone" placeholder="<%=@patient.phone%>" required>
+            </div>
+            <div class="form-group">
+                <label for="address"> address: </label>
+                <input type="text" class="form-control" name="patient[address]" id="address" placeholder="<%=@patient.address%>" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Edit</button>
+        </form>
+    <% end %>

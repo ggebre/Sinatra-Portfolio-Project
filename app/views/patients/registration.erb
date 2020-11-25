@@ -1,31 +1,32 @@
 
-<% if logged_in? %>
-    <h1> New Patient Registration</h1>
-    
-    <form action="/staffs/patients" method="POST">
-        <div class="form-group">
-            <label for="name"> Name: </label>
-            <input type="text" class="form-control" name="patient[name]" id="name" placeholder="Enter patient full name">
-        </div>
-        <div class="form-group">
-            <label for="dob"> DOB: </label>
-            <input type="date" class="form-control" name="patient[dob]" id="dob" >
-        </div>
-        <div class="form-group">
-            <label for="email"> Email: </label>
-            <input type="email" class="form-control" name="patient[email]" id="email" placeholder="Enter patient email address">
-        </div>
-        <div class="form-group">
-            <label for="phone"> Phone: </label>
-            <input type="text" class="form-control" name="patient[phone]" id="phone" placeholder="Enter patient phone number">
-        </div>
-        <div class="form-group">
-            <label for="address"> address: </label>
-            <input type="text" class="form-control" name="patient[address]" id="address" placeholder="Enter patient address">
-        </div>
+    <% if logged_in? %>
+        <h1> New Patient Registration</h1>
         
-        <button type="submit" class="btn btn-primary">Register New Patient</button>
-        
-    </form>
-<% end %>
+        <form action="/staffs/patients" method="POST">
+            <div class="form-group">
+                <label for="name"> Name: </label>
+                <input type="text" class="form-control" name="patient[name]" id="name" placeholder="Enter patient full name">
+            </div>
+            <div class="form-group">
+                <label for="dob"> DOB: </label>
+                <input type="date" class="form-control" name="patient[dob]" id="dob" >
+            </div>
+            <div class="form-group">
+                <label for="email"> Email: </label>
+                <input type="email" class="form-control" name="patient[email]" id="email" placeholder="Enter patient email address">
+            </div>
+            <div class="form-group">
+                <label for="phone"> Phone: </label>
+                <input type="text" class="form-control" name="patient[phone]" id="phone" placeholder="Enter patient phone number">
+            </div>
+            <div class="form-group">
+                <label for="address"> address: </label>
+                <input type="text" class="form-control" name="patient[address]" id="address" placeholder="Enter patient address">
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Register New Patient</button>
+            
+        </form>
+    <% end %>
+
 

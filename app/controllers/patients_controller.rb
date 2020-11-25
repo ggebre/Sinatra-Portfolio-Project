@@ -1,76 +1,57 @@
 class PatientsController < ApplicationController 
     
-
+   
     # when patient logs in, it lands on this page
     get '/patients/:id' do 
-
+       
         @patient = Patient.find(params[:id])
 
-        erb :'/patients/appointment_list'
-
-        # @staff = Staff.find_staff(session[:user_id])
-        # # if patient is accessing info or staff accessing info 
-        #     # erb :'/patients/show'
-        # @prescriptions = Prescription.all 
-
-        # if @patient.user && session[:user_id] == @patient.user.id
-        #     erb :'/patients/appointment_list'
-        # else
-        #     if @staff.is_doctor?
-        #         erb :'/appointments/show_diagnosis'
-        #     else
-        #         # appointment set up page 
-               
-        #         redirect "/appointments/#{@patient.id}/new"
-        #         # erb :'/patients/appointment_list'
-        #     end
-        # end
+        erb :'/patients/index'
         
     end
 
-    post '/patients/:id/diagnosis' do 
-        # find patient 
-        # get patient.appointment where appointment date 
-
-        # appointments_for_a_patient_with(patient_id)
-        patient = Patient.find(params[:id])
-        todays_appointment = patient.todays_appointment
+    post '/patients/appointment/:id' do 
+        # find appointment 
+        appointment = Appointment.find(params[:id])
         
-       
-        # find the appointment with today's date
         # update the diagnosis_note 
-        todays_appointment.update(diagnosis_note: params[:appointment][:diagnosis])
-        todays_appointment.prescriptions << Prescription.find(params[:prescription])
-        redirect "/staffs"
+        appointment.update(diagnosis_note: params[:appointment][:diagnosis])
+        appointment.prescriptions << Prescription.find(params[:prescription])
+        redirect "/appointments/patient/#{appointment.patient_id}"
     end
     
 # APPOINTMENT LIST 
     get '/patients/:id/upcoming_appointments' do  
         patient = Patient.find(params[:id])
-        @appointments = patient.appointments.select{|appointment| !appointment.is_upcoming?}
+        @appointments = patient.appointments.select{|appointment| appointment.appointment_date >= Time.now}
         erb :'/appointments/show'
         # erb :'/patients/appointment_list'
     end
 
     get '/patients/:id/old_appointments' do  
         patient = Patient.find(params[:id])
-        @appointments = patient.appointments.select{|appointment| appointment.is_upcoming?}
+        @appointments = patient.appointments.select{|appointment| appointment.appointment_date < Time.now}
         erb :'/appointments/show'
         # erb :'/patients/appointment_list'
     end
 
-
-
-
-
     get '/patients/:id/prescription' do 
         @patient = Patient.find(params[:id])
+        
         # redirect to prescription show page 
     end
 
-    get '/patients/:id/diagnosis' do 
+    get '/patients/:id/appointment/:appointment_id' do 
         @patient = Patient.find(params[:id])
+        @appointment = Appointment.find(params[:appointment_id])
+        @prescriptions = Prescription.all
         # redirect to diagnosis 
+        if current_user.staff_id
+            erb :'/appointments/show_diagnosis'
+        else
+            # details of the given link 
+            erb :'/appointments/show_appointment'
+        end
     end
 
 end

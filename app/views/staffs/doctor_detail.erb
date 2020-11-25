@@ -4,19 +4,15 @@
 <h2> Phone :   <%=@doctor.phone%></h2>
 <h2> Address :  <%=@doctor.address%></h2>
 
-
-
-
+    <% if logged_in? && @doctor.is_doctor_of?(current_user) %>
+        <form action='/comments' method='post'>
+            <input type="hidden" name="staff[id]" value="<%=@doctor.id%>">
+            <textarea name="comment[content]" rows=3 cols=30 placeholder="ADD NEW COMMENT"></textarea>
+            <br>
+            <button>Submit</button>
+        </form>
+    <% end %>
     
-    <form action='/comments' method='post'>
-        <input type="hidden" name="staff[id]" value="<%=@doctor.id%>">
-        <textarea name="comment[content]" rows=3 cols=30 placeholder="ADD NEW COMMENT"></textarea>
-        <br>
-        <button>Submit</button>
-    </form>
-   
-
-
 
 <% if flash.has_key?(:message) %>
     <div class="alert alert-success" role="alert">
@@ -46,8 +42,8 @@
 
         </form>
     <% else %>
-
-        <textarea rows=3 cols=30 placeholder="<%= comment.content %>"></textarea>
+        <p>Created On:     <%= comment.created_at %></p>
+        <textarea rows=3 cols=30 ><%= comment.content %></textarea>
         <br>
     
     <% end %>

@@ -1,0 +1,25 @@
+<% if logged_in? %>
+
+    <h3><%= @appointment.appointment_date%></h3>
+
+    <% if @appointment.diagnosis_note %>
+        <label for="diagnosis_note"> <strong>Diagnosis:</strong> </label>
+        <br>
+        <textarea id="diagnosis_note" rows="5" cols="10" ><%= @appointment.diagnosis_note%></textarea>
+
+
+        <p> <strong>Prescription List</strong> </p>
+        <ul>
+            <% @appointment.prescriptions.each do |prescription| %>
+                <li> <%= prescription.name %> </li>
+                    <ul>
+                        <li> <%= prescription.description %></li>
+                    </ul>
+
+            <% end %>
+        </ul>
+    <% end %>
+
+
+<% end %>   
+

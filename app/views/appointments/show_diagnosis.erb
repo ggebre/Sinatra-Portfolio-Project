@@ -1,25 +1,27 @@
+    <% if logged_in? %>
+    
+        <h1> Patient Detail </h1>
+            <p> Name : <%= @patient.name %> </p>
+            <p> Email : <%= @patient.email %> </p>
+            <p> Phone: <%= @patient.phone %> </p>
+            <p> Address : <%= @patient.address %> </p>
 
-<h1> Patient Detail </h1>
-    <p> Name : <%= @patient.name %> </p>
-    <p> Email : <%= @patient.email %> </p>
-    <p> Phone: <%= @patient.phone %> </p>
-    <p> Address : <%= @patient.address %> </p>
-
-<form action="/patients/<%=@patient.id%>/diagnosis" method="POST">
+        <form action="/patients/appointment/<%=@appointment.id%>" method="POST">
+                
+                <label for="diagnosis"> Diagnosis </label> <br>
+                <textarea id = "diagnosis" name="appointment[diagnosis]" rows="4" cols="50">  </textarea>
+                <p> Prescriptions </p>
+                
+                <% @prescriptions.each do |prescription| %>
+                    <br>
+                    <label for="prescription_<%=prescription.id%>"> <%=prescription.name%>: </label>
+                    <input type="checkbox"  id="prescription_<%=prescription.id%>" name="prescription[]" value="<%=prescription.id%>">
+                    
+                <% end %>
+                <br>
+                <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
         
-        <label for="diagnosis"> Diagnosis </label> <br>
-        <textarea id = "diagnosis" name="appointment[diagnosis]" rows="4" cols="50">  </textarea>
-
-        <p> Prescriptions </p>
-        
-        <% @prescriptions.each do |prescription| %>
-            <br>
-            <label for="prescription_<%=prescription.id%>"> <%=prescription.name%>: </label>
-            <input type="checkbox"  id="prescription_<%=prescription.id%>" name="prescription[]" value="<%=prescription.id%>">
-            
-        <% end %>
-        <br>
-        <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+    <% end %>
 
 

@@ -26,7 +26,7 @@ class UserController < ApplicationController
             session[:user_id] = user.id
             
             if patient_or_staff.instance_of?(Patient) 
-                redirect "/patients/#{patient.slug}"
+                redirect "/patients/#{patient.id}"
             else
                 redirect "/staffs"
             end
@@ -53,9 +53,12 @@ class UserController < ApplicationController
             # if user patient, do something if now, staff 
            if user.patient_id 
             # redirect to patient detail...appointments, prescriptions,....
-                patient = Patient.where(user: user).first
-                redirect "/patients/#{patient.slug}"
+                redirect "/patients/#{user.patient_id}"
            else 
+                # set session based on the staff 
+                staff = Staff.find(user.staff_id)
+                session[:user_type] = staff.is_doctor 
+                
                 redirect '/staffs'
            end
         else 
