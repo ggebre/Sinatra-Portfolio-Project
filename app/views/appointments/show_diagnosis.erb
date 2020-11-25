@@ -6,7 +6,7 @@
     <p> Address : <%= @patient.address %> </p>
 
 <form action="/patients/diagnosis/<%=@patient.slug%>" method="POST">
-    
+        
         <label for="diagnosis"> Diagnosis </label> <br>
         <textarea id = "diagnosis" name="appointment[diagnosis]" rows="4" cols="50">  </textarea>
 

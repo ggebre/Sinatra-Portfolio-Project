@@ -1,14 +1,14 @@
 class AppointmentsController < ApplicationController 
 
-    get '/appointments' do 
-        # erb :"/appointments/index"
-    end
+    
     get '/appointments/old_appointments' do 
         
         # find the patient and filter out his/her appointments as old and upcoming
         # render it on /appointments/show_appointments page  
-        @patient = Patient.find_patient(session[:user_id]) 
-        @appointments = @patient.appointments.order(appointment_date: :desc).select {|appointment| appointment.is_upcoming?} 
+        
+       
+        @appointments = Appointment.appointments_for_a_patient_with(current_user.patient_id).select {|appointment| appointment.is_upcoming?} 
+       
         erb :'/appointments/show_appointments'
     end
 
@@ -16,8 +16,9 @@ class AppointmentsController < ApplicationController
     
         # find the patient and filter out his/her appointments as old and upcoming
         # render it on /appointments/show_appointments page  
-        @patient = Patient.find_patient(session[:user_id]) 
-        @appointments = @patient.appointments.order(appointment_date: :desc).select {|appointment| !appointment.is_upcoming?} 
+        
+        @appointments = Appointment.appointments_for_a_patient_with(current_user.patient_id).select {|appointment| !appointment.is_upcoming?} 
+       
         erb :'/appointments/show_appointments'
     end
 
@@ -31,26 +32,22 @@ class AppointmentsController < ApplicationController
     get '/appointments/:slug/new' do 
         @staffs = Staff.all
         @patient = Patient.find_by_slug(params[:slug])
+        
         erb :'/appointments/new'
     end
 
     post '/appointments/:slug' do 
 
+        appointment = Appointment.create(appointment_date: params[:appointment][:date])
         
-        patient = Patient.find_by_slug(params[:slug])
-        doctor = Staff.find(params[:staff][:id])
-       
-        
-        @appointment = Appointment.create(appointment_date: params[:appointment][:date])
-        
-        patient.appointments << @appointment
-        doctor.appointments << @appointment
-        
-        # if staff created appointment redirect to 
-        
-        if User.find(session[:user_id]) == patient.user  
 
-            redirect "/patients/#{patient.slug}/appointments"
+        appointment.staff_id = params[:staff][:id].to_i
+        appointment.patient_id = params[:patient][:id].to_i
+        appointment.save 
+        
+        if current_user.patient_id == params[:patient][:id].to_i
+
+            redirect "/patients/#{params[:slug]}/appointments"
         else 
             flash[:message] = "Successfully created appointment"
             redirect '/staffs'

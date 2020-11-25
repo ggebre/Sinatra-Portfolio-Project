@@ -1,9 +1,5 @@
 class PatientsController < ApplicationController 
-    get '/patients' do 
-       
-    end
-   
-
+    
     get '/patients/:slug/edit' do 
         @patient = Patient.find_by_slug(params[:slug])
         erb :'/patients/edit'
@@ -35,10 +31,14 @@ class PatientsController < ApplicationController
     end
 
     post '/patients' do 
-        patient = Patient.create(params[:patient])
-        # once successful the staff should go to staff index
-        flash[:message] = "You successfully added #{patient.name}!!"
-        redirect '/staffs'
+        
+        patient = Patient.find_by(name: params[:patient][:name], dob: params[:patient][:dob])
+        if !patient
+            patient = Patient.create(params[:patient])
+            flash[:message] = "You successfully added #{patient.name}!!"
+        end
+        redirect "/appointments/#{patient.slug}/new"
+        
     end
 
     get '/patients/search' do 
@@ -63,6 +63,8 @@ class PatientsController < ApplicationController
 
     # when patient logs in, it lands on this page
     get '/patients/:slug' do 
+
+        
         @patient = Patient.find_by_slug(params[:slug])
 
         @staff = Staff.find_staff(session[:user_id])
@@ -73,10 +75,11 @@ class PatientsController < ApplicationController
         if @patient.user && session[:user_id] == @patient.user.id
             erb :'/patients/appointment_list'
         else
-            if @staff.is_doctor
+            if @staff.is_doctor?
                 erb :'/appointments/show_diagnosis'
             else
                 # appointment set up page 
+               
                 redirect "/appointments/#{@patient.slug}/new"
                 # erb :'/patients/appointment_list'
             end
@@ -87,10 +90,12 @@ class PatientsController < ApplicationController
     post '/patients/diagnosis/:slug' do 
         # find patient 
         # get patient.appointment where appointment date 
+
+        # appointments_for_a_patient_with(patient_id)
         patient = Patient.find_by_slug(params[:slug])
         todays_appointment = patient.todays_appointment
         
-        binding.pry
+       
         # find the appointment with today's date
         # update the diagnosis_note 
         todays_appointment.update(diagnosis_note: params[:appointment][:diagnosis])
@@ -99,8 +104,7 @@ class PatientsController < ApplicationController
     end
     
 
-    get '/patients/:slug/appointments' do 
-        
+    get '/patients/:slug/appointments' do  
         @patient = Patient.find_by_slug(params[:slug])
         erb :'/patients/appointment_list'
     end

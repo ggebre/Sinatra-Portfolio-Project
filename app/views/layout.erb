@@ -16,9 +16,22 @@
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
 
+              <% if logged_in? && current_user.staff_id %>
               <li class="nav-item active">
-                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/staffs">Home <span class="sr-only">(current)</span></a>
               </li>
+              <% elsif logged_in? && current_user.patient_id %>
+                <% patient = Patient.find_by(id: current_user.patient_id) %>
+                <li class="nav-item active">
+                <a class="nav-link" href="/patients/<%=patient.slug%>">Home <span class="sr-only">(current)</span></a>
+                </li>
+              <% else %>
+                <li class="nav-item active">
+                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                </li>
+              <% end %>
+
+
               <li class="nav-item">
                 <a class="nav-link" href="/staffs/doctors">Practitioners</a>
               </li>

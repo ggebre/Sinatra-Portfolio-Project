@@ -1,5 +1,6 @@
-<% if logged_in? && Staff.find{|staff| staff.user.id==session[:user_id]}%>
-    <h1> Registration Form</h1>
+
+<% if logged_in? %>
+    <h1> New Patient Registration</h1>
     
     <form action="/patients" method="POST">
         <div class="form-group">

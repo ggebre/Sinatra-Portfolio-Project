@@ -8,7 +8,20 @@ class Appointment < ActiveRecord::Base
         Time.new(formatted_date) 
     end
 
-    
+    def self.ordered_appointments 
+        self.order(appointment_date: :desc)
+    end
+
+    def self.appointments_for_a_patient_with(patient_id)
+        # self.find_by(patient_id: patient_id)
+        self.select {|appointment| appointment.patient_id == patient_id}
+    end
+
+    def self.appointments_for_a_staff_with(staff_id)
+        
+        self.select {|appointment| appointment.staff_id == staff_id}
+
+    end
 
     def formatted_date (date)
 

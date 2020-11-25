@@ -6,14 +6,15 @@
     </div>
 <% end %>
 
-
+    
     <br><br>
     <% staff = Staff.find_staff(session[:user_id]) %>
     <% if !staff.is_doctor %>
         <a href="/patients/new" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">REGISTER NEW PATIENT</a>
     <% end %>
-    <a href="/patients/search" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">SEARCH FOR A PATIENT</a>
-    <a href="/staffs/<%=staff.slug%>/comments" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Comments</a>
-        
+        <a href="/patients/search" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">SEARCH FOR A PATIENT</a>
+    <% if staff.is_doctor %>
+        <a href="/staffs/<%=staff.slug%>/comments" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Comments</a>
+    <% end %> 
 <% end %>
 

@@ -3,10 +3,11 @@
     Patient.create(name: "Getu Gebre", dob: "2020-01-01", phone: "123456", address: "12345678")
     Patient.create(name: "Eskedar Gebrehawaryat", dob: "2020-01-01", phone: "123456", address: "12345678")
     Patient.create(name: "Daniel Alemu", dob: "2020-01-01", phone: "123456", address: "12345678")
+    Patient.create(name: "Daniel Samuel", dob: "2020-01-01", phone: "123456", address: "12345678")
     
 
 
-    Staff.create(name: "Ruth Gebre", dob:"2020-01-01", is_doctor: true, medical_id: "D1" , speciality: "Family Practice", address: "123456", phone: "123456")
+    Staff.create(name: "Cyndy Robert", dob:"2020-01-01", is_doctor: true, medical_id: "D1" , speciality: "Family Practice", address: "123456", phone: "123456")
     Staff.create(name: "Samuel Gebre", dob:"2020-01-01", is_doctor: true, medical_id: "D2" , speciality: "Family Practice", address: "123456", phone: "123456")
     Staff.create(name: "Solomon Belay", dob:"2020-01-01", is_doctor: false, medical_id: "N1")
     Staff.create(name: "Selamawith Fasil", dob:"2020-01-01", is_doctor: false, medical_id: "N2")

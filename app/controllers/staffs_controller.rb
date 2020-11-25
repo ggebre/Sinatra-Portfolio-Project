@@ -1,11 +1,12 @@
 class StaffsController < ApplicationController 
     get '/staffs' do 
-        
         erb :'/staffs/index'
     end
     
     get '/staffs/:slug/comments' do 
+        # @staff = Staff.find_by_slug(params[:slug])
         @staff = Staff.find_by_slug(params[:slug])
+        @comments = Comment.comments_to_a_staff_with(@staff.id)
         erb :'/comments/show'
     end
 
@@ -24,7 +25,5 @@ class StaffsController < ApplicationController
         @staff = Staff.find_by_slug(params[:slug])
         erb :'/staffs/show'
     end
-
-
 
 end

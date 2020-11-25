@@ -7,16 +7,14 @@ class Patient < ActiveRecord::Base
 
 
       def self.find_patient(user_id) 
-          self.all.detect {|patient| patient.user == User.find_by(id: user_id)}
+          self.find {|patient| patient.user == User.find_by(id: user_id)}
       end
       
       def doctors  
           self.appointments.map {|appointment| Staff.find_by(id: appointment.staff_id)}
       end
 
-      def todays_appointment
-       
-        
+      def todays_appointment 
         # self.appointments.detect {|appointment| appointment.appointment_date.strip == todays_date}
         self.appointments.where(appointment_date:  Time.now.strftime('%Y-%m-%d')).first
       end
@@ -26,10 +24,7 @@ class Patient < ActiveRecord::Base
       end
     
       def self.find_by_slug(slug)
-        self.all.detect {|patient| patient.slug == slug}
+        self.find {|patient| patient.slug == slug}
       end 
 
-      def is_doctor? 
-        is_doctor == true 
-      end
 end
